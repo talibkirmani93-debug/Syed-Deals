@@ -1,0 +1,10 @@
+{
+  "name": "Syed Deals",
+  "short_name": "Syed Deals",
+  "description": "A simple product recommendations page",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f6fa",
+  "theme_color": "#101827",
+  "icons": []
+}

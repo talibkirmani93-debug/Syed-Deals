@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101827">
+<meta name="description" content="Syed Deals — hand-picked product recommendations and useful finds.">
+<link rel="manifest" href="manifest.json">
+<title>Syed Deals | Useful Finds</title>
+<style>
+:root{--bg:#f4f6fa;--ink:#172033;--muted:#687386;--card:#fff;--accent:#e7a52c;--dark:#101827;--line:#e3e8f0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:var(--dark);color:white;padding:22px 16px 26px}.wrap{max-width:1050px;margin:auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{font-size:1.35rem;font-weight:850;letter-spacing:.2px}.brand span{color:var(--accent)}
+.pill{font-size:.78rem;border:1px solid #ffffff55;border-radius:999px;padding:5px 10px;color:#e7edf7}
+h1{font-size:clamp(1.65rem,5vw,2.7rem);line-height:1.12;margin:26px 0 10px;max-width:700px}
+header p{margin:0;color:#d6deea;max-width:620px}
+main{padding:20px 16px 48px}.notice{background:#fff8e8;border:1px solid #f0d8a4;padding:12px 14px;border-radius:12px;font-size:.9rem;margin-bottom:18px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.tools input,.tools select{border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:white;font:inherit;min-width:0}.tools input{flex:1;min-width:180px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 5px 18px #1d2a3a08;display:flex;flex-direction:column;min-height:235px}
+.emoji{width:56px;height:56px;border-radius:14px;background:#f2f4f8;display:grid;place-items:center;font-size:1.8rem;margin-bottom:12px}
+.tag{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:#80580b;font-weight:800}
+.card h2{font-size:1.08rem;margin:5px 0}.card p{font-size:.9rem;color:var(--muted);margin:0 0 14px}
+.card a,.btn{display:inline-block;text-align:center;background:var(--dark);color:white;text-decoration:none;padding:10px 13px;border-radius:10px;font-weight:700;margin-top:auto}
+.card a:hover,.btn:hover{background:#273650}.small{font-size:.8rem;color:var(--muted);margin-top:9px}
+section.info{margin-top:26px;background:white;border:1px solid var(--line);border-radius:16px;padding:18px}
+section.info h2{margin:0 0 8px;font-size:1.15rem}footer{padding:22px 16px;background:#e9edf4;color:#536075;font-size:.85rem}
+footer a{color:inherit} .empty{padding:25px;color:var(--muted);text-align:center;display:none}
+@media(min-width:700px){header{padding-top:28px}main{padding-top:28px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="top"><div class="brand">Syed <span>Deals</span></div><span class="pill">Useful finds • Simple picks</span></div>
+  <h1>Good finds, without the endless scrolling.</h1>
+  <p>A starter page for sharing products you genuinely recommend. Browse a category, read your notes, then visit the retailer to check the latest details.</p>
+</div></header>
+<main class="wrap">
+  <div class="notice"><strong>Affiliate disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. Some links on this page may be affiliate links, which means I may earn a commission at no extra cost to you.</div>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Search recommendations…" aria-label="Search recommendations">
+    <select id="category" aria-label="Filter by category"><option value="all">All categories</option><option>Everyday</option><option>Tech</option><option>Style</option></select>
+  </div>
+  <div id="products" class="grid"></div><div id="empty" class="empty">No recommendations match your search.</div>
+  <section class="info"><h2>How this page works</h2><p>These are demo cards, not live offers. Replace the sample text and placeholder links with products you have reviewed and your own tagged Special Links from Amazon Associates after your account and site are eligible. Do not invent discounts, prices, ratings, or product claims.</p></section>
+  <section class="info"><h2>Contact & transparency</h2><p>For questions about a recommendation, contact: <strong>[add your public contact email]</strong>. Update this section with your real contact details and a privacy notice before publishing.</p></section>
+</main>
+<footer><div class="wrap">Syed Deals is an independent recommendations page and is not affiliated with or endorsed by Amazon. Product availability, details, and prices can change; check the retailer’s page before purchasing. <a href="https://affiliate-program.amazon.in/" target="_blank" rel="noopener">Amazon Associates India</a>.</div></footer>
+<script>
+const products = [
+ {name:"Everyday Essential",category:"Everyday",emoji:"🧺",desc:"Add a short, honest note about who this item may help.",url:"https://www.amazon.in/"},
+ {name:"Useful Tech Pick",category:"Tech",emoji:"🎧",desc:"Mention what you tested or researched; avoid unsupported claims.",url:"https://www.amazon.in/"},
+ {name:"Simple Style Find",category:"Style",emoji:"👟",desc:"Add sizing, material, or fit notes only when verified.",url:"https://www.amazon.in/"},
+ {name:"Desk & Study Helper",category:"Everyday",emoji:"📚",desc:"Explain the practical use and any limitations you noticed.",url:"https://www.amazon.in/"}
+];
+const grid=document.getElementById('products'),search=document.getElementById('search'),category=document.getElementById('category'),empty=document.getElementById('empty');
+function render(){
+ const q=search.value.trim().toLowerCase(),cat=category.value;
+ const items=products.filter(p=>(cat==='all'||p.category===cat)&&(p.name+' '+p.desc+' '+p.category).toLowerCase().includes(q));
+ grid.innerHTML=items.map(p=>`<article class="card"><div class="emoji" aria-hidden="true">${p.emoji}</div><span class="tag">${p.category}</span><h2>${p.name}</h2><p>${p.desc}</p><a href="${p.url}" target="_blank" rel="sponsored nofollow noopener">Check on Amazon ↗</a><div class="small">Paid link / affiliate link may be used</div></article>`).join('');
+ empty.style.display=items.length?'none':'block';
+}
+search.addEventListener('input',render);category.addEventListener('change',render);render();
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
